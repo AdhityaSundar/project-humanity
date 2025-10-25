@@ -837,3 +837,85 @@ section { scroll-margin-top: 80px; }
   opacity: .06;
   pointer-events: none;
 }
+
+/* ===== MOBILE NAVBAR + MENU FIXES ===== */
+
+/* Set a header height token so the mobile menu can start exactly below it */
+:root { --header-h: 64px; }
+@media (max-width: 480px){
+  :root { --header-h: 56px; }   /* slightly shorter on small phones */
+}
+
+/* Keep header on top and remove any accidental 1px borders */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 0;              /* kill faint hairline */
+}
+
+/* Make the hamburger bars visible on the gradient */
+.menu-button span{ background: #fff; }
+
+/* MOBILE MENU PANEL (when the hamburger is used) */
+.menu{
+  /* Start right under the header, not at 64px hard-coded */
+  position: fixed;
+  inset: var(--header-h) 0 auto 0;
+
+  /* Match the brand gradient and add a light blur */
+  background:
+    linear-gradient(90deg, rgba(14,165,233,.95), rgba(245,158,11,.95));
+  backdrop-filter: blur(8px);
+
+  /* Remove the old white bar line */
+  border-bottom: 0;
+  box-shadow: 0 8px 26px rgba(2,8,23,.12);
+
+  /* Keep it above content */
+  z-index: 1001;
+}
+
+/* Mobile menu links = white, with subtle hover */
+.menu a{
+  color: #ffffff !important;
+  font-weight: 800;
+}
+.menu a:hover{
+  background: rgba(255,255,255,.14);
+  color: #ffffff;
+}
+
+/* When menu is closed, keep it off-canvas (as you had) */
+#menu-toggle:not(:checked) ~ .menu{
+  transform: translateY(-115%);
+}
+
+/* ===== REMOVE THE 1PX “SEAM” UNDER THE HEADER ===== */
+
+/* Ensure the first content section cannot show a white pixel under the sticky header */
+.band:first-of-type,
+section:first-of-type{
+  padding-top: calc(clamp(64px, 9vw, 96px) + 2px);  /* gives a tiny cushion */
+  margin-top: 0;
+}
+
+/* If you use the soft separators on the very first band, shift their start down one pixel */
+.band:first-of-type.sep-top::before{
+  top: calc(-1px - var(--bridge-h, 56px)) !important;
+}
+
+/* Extra safety for iOS notch environments */
+@supports (padding: env(safe-area-inset-top)){
+  .site-header{ padding-top: env(safe-area-inset-top); }
+  .menu{ inset: calc(var(--header-h) + env(safe-area-inset-top)) 0 auto 0; }
+}
+
+/* ===== OPTIONAL: slightly darker bottom edge so the header looks “attached” ===== */
+.site-header::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:0; height:0; pointer-events:none;
+  /* If you still see a hairline on some devices, switch height to 1px and keep alpha low */
+  /* height:1px; background:rgba(2,8,23,.06); */
+}
+
