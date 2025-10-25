@@ -1,0 +1,839 @@
+/* ===============================
+   Project Humanity – Light Theme
+   =============================== */
+
+/* Palette (light) */
+:root{
+  --text:#0f172a;           /* slate-900 */
+  --muted:#475569;          /* slate-600 */
+  --subtle:#64748b;         /* slate-500 */
+
+  --paper:#ffffff;          /* base white */
+  --paper-2:#f8fafc;        /* slightly blue white */
+
+  --stroke:#e6edf6;         /* card border */
+  --soft-shadow: 0 10px 30px rgba(2,8,23,.06);
+
+  /* Brand hues */
+  --sky:#06b6d4;            /* cyan-600 */
+  --sky-10:#e8fbff;
+  --sunrise:#f59e0b;        /* amber-500 */
+  --sunrise-10:#fff5e6;
+  --meadow:#10b981;         /* emerald-500 */
+  --meadow-10:#ecfff7;
+  --plum:#7c3aed;           /* purple-600 */
+
+  --radius-xl:20px; --radius-lg:16px;
+}
+
+/* ----------------- Global underlay: soft, light gradient ----------------- */
+html[data-theme="light"] body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans";
+  color:var(--text);
+  background:
+    radial-gradient(1400px 700px at -10% -20%, #ebf4ff 0, transparent 60%),
+    radial-gradient(1200px 600px at 110% -10%, #f7f2ff 0, transparent 60%),
+    linear-gradient(180deg, #f9fbff 0%, #ffffff 55%, #f9fbff 100%);
+  background-attachment: fixed;
+}
+
+/* ----------------- Containers/typography ----------------- */
+.container{ width:min(1100px,92%); margin-inline:auto; }
+.centered-head{ text-align:center; }
+h1,h2,h3{ margin:0 0 10px; line-height:1.12; color:var(--text); }
+h1{ font-size: clamp(42px, 6.2vw, 72px); font-weight:900; letter-spacing:-.02em; }
+h2{ font-size: clamp(24px, 3.4vw, 36px); font-weight:900; }
+h3{ font-size: clamp(18px, 2.2vw, 22px); font-weight:800; }
+p{ color:var(--muted); font-size:17px; line-height:1.7; }
+.lead{ font-size: clamp(16px, 2.2vw, 19px); }
+
+/* ----------------- Header / Nav (light) ----------------- */
+.site-header{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter:saturate(1.2) blur(10px);
+  background:rgba(255,255,255,.8);
+  border-bottom:1px solid #eaeef6;
+}
+.nav{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+.brand{ display:flex; align-items:center; gap:10px; color:var(--text); text-decoration:none; font-weight:900; }
+.logo{ width:38px; height:38px; object-fit:contain; }
+.menu a{ color:#334155; text-decoration:none; font-weight:700; padding:10px 12px; border-radius:10px; }
+.menu a:hover{ background:#eef4ff; }
+#menu-toggle{ display:none; }
+.menu-button{ width:36px; height:30px; display:grid; place-items:center; gap:4px; cursor:pointer; }
+.menu-button span{ width:24px; height:2px; background:#0f172a; display:block; }
+.menu{
+  position:fixed; inset:64px 0 auto 0; background:#ffffff;
+  transform:translateY(-110%); transition:transform .25s ease;
+  display:flex; flex-direction:column; gap:10px; padding:20px; border-bottom:1px solid #eaeef6;
+}
+#menu-toggle:checked ~ .menu{ transform:translateY(0); }
+@media (min-width:900px){
+  .menu-button{ display:none; }
+  .menu{ position:static; transform:none; background:transparent; padding:0; border:0; flex-direction:row; gap:18px; }
+}
+
+/* ----------------- Buttons & chips ----------------- */
+.btn{
+  display:inline-block; padding:12px 18px; border-radius:999px; font-weight:800; text-decoration:none;
+  transition: transform .15s ease, box-shadow .15s ease, filter .2s ease;
+  box-shadow: var(--soft-shadow);
+}
+.btn:hover{ transform: translateY(-2px); }
+.btn-primary{ color:#0b1224; background: linear-gradient(90deg, var(--sunrise), #ffd166); border:1px solid #f8d58a; }
+.btn-primary:hover{ filter:brightness(1.05); }
+.btn-ghost{ color: var(--sky); border:2px solid var(--sky); background: transparent; }
+.btn-ghost:hover{ background:#e6faff; }
+.chip{ display:inline-block; font-weight:800; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid #d9e7f7; }
+.chip-sky{ color:#0284c7; background:#eaf6ff; border-color:#cfe9ff; }
+.chip-sunrise{ color:#b45309; background:#fff1db; border-color:#ffe3b4; }
+
+.cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.tag{ color:#0f766e; font-weight:800; letter-spacing:.25px; }
+.note{ display:block; margin-top:10px; color:#64748b; font-size:14px; }
+
+/* ----------------- Bands + soft separators (light) ----------------- */
+.band{ position:relative; padding: clamp(64px,7.2vw,96px) 0; isolation:isolate; }
+.band--tint-sky{    background: linear-gradient(180deg, var(--sky-10), #ffffff 60%); }
+.band--tint-sunrise{background: linear-gradient(180deg, var(--sunrise-10), #ffffff 60%); }
+.band--tint-meadow{ background: linear-gradient(180deg, var(--meadow-10), #ffffff 60%); }
+
+/* separators: subtle glow + hairline; use sep-sky / sep-sunrise / sep-meadow */
+.band.sep-top::before,
+.band.sep-bottom::after{
+  content:""; position:absolute; left:0; right:0; height:56px; pointer-events:none; z-index:0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.04) 0 1px, transparent 1px),
+    radial-gradient(120% 56px at 50% 0, rgba(2,132,199,.08) 0, transparent 70%);
+}
+.band.sep-top::before{ top:-56px; }
+.band.sep-bottom::after{ bottom:-56px; }
+.band.sep-sky::before, .band.sep-sky::after{
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.04) 0 1px, transparent 1px),
+    radial-gradient(120% 56px at 50% 0, rgba(14,165,233,.12) 0, transparent 70%);
+}
+.band.sep-sunrise::before, .band.sep-sunrise::after{
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.04) 0 1px, transparent 1px),
+    radial-gradient(120% 56px at 50% 0, rgba(245,158,11,.12) 0, transparent 70%);
+}
+.band.sep-meadow::before, .band.sep-meadow::after{
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.04) 0 1px, transparent 1px),
+    radial-gradient(120% 56px at 50% 0, rgba(16,185,129,.12) 0, transparent 70%);
+}
+
+/* ----------------- Hero ----------------- */
+.hero-grid{ display:grid; gap:46px; align-items:center; }
+.hero-copy{ max-width:760px; margin:0 auto; text-align:center; position:relative; z-index:1; }
+.eyebrow{
+  display:inline-block; font-weight:800; text-transform:uppercase; letter-spacing:1.6px;
+  color:#0369a1; background:#e7f5ff; border:1px solid #cdeaff; padding:6px 12px; border-radius:999px; margin-bottom:12px;
+}
+.gradient-word{
+  background: linear-gradient(90deg, #0284c7, #f59e0b 55%, #10b981);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero .cta-row{ justify-content:center; }
+.hero-stats{ display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-top:18px; }
+.hero-stats li{ border:1px dashed #bfe7ff; background:#ffffffcc; color:#075985; padding:10px 12px; border-radius:12px; box-shadow: var(--soft-shadow); }
+
+.hero-media{ display:flex; justify-content:center; align-items:center; position:relative; top:-10px; }
+.hero-media img{ width:100%; max-width:480px; border-radius:22px; object-fit:cover; border:1px solid #e6eef7; box-shadow: var(--soft-shadow); }
+.orb{ position:absolute; border-radius:999px; filter: blur(26px); opacity:.5; z-index:-1; }
+.orb-sky{ width:220px; height:220px; right:-26px; top:-18px; background: radial-gradient(circle, rgba(56,189,248,.35), transparent 60%); }
+.orb-sunrise{ width:240px; height:240px; left:-30px; bottom:-26px; background: radial-gradient(circle, rgba(245,158,11,.28), transparent 60%); }
+
+@media (min-width:940px){
+  .hero-grid{ grid-template-columns: 1.08fr .92fr; }
+  .hero-copy{ margin:0; text-align:left; }
+  .hero .cta-row{ justify-content:flex-start; }
+  .hero-media{ justify-content:flex-start; top:-18px; }
+}
+
+/* ----------------- Grid helpers ----------------- */
+.grid-2{ display:grid; grid-template-columns:1fr; gap:22px; }
+.grid-4{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+@media (min-width:760px){ .grid-2{ grid-template-columns: 1fr 1fr; } }
+@media (min-width:980px){ .grid-4{ grid-template-columns: repeat(4,1fr); } }
+
+/* ----------------- Card style (light glass) ----------------- */
+.card{
+  position:relative; background:#ffffff; border:1px solid var(--stroke); border-radius:var(--radius-xl);
+  overflow:hidden; box-shadow: var(--soft-shadow); display:flex; flex-direction:column;
+}
+.card::before{
+  content:""; position:absolute; inset:-1px; padding:1px; border-radius:inherit; pointer-events:none; opacity:.35;
+  background: linear-gradient(120deg, rgba(2,132,199,.35), rgba(245,158,11,.28), rgba(16,185,129,.35));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+.card-img{ width:100%; height:230px; object-fit:cover; border-bottom:1px solid var(--stroke); }
+.card-body{ padding:18px 18px 22px; }
+.bullets{ margin:12px 0 0 0; padding:0; list-style:none; }
+.bullets li{ position:relative; padding-left:22px; margin:8px 0; color:var(--muted); }
+.bullets li::before{
+  content:""; position:absolute; left:0; top:.55em; width:10px; height:10px; border-radius:50%;
+  background: radial-gradient(circle at 35% 35%, #fff 0 10%, #0284c7 40%, rgba(2,132,199,.12) 70%);
+  box-shadow: 0 0 8px rgba(2,132,199,.25);
+}
+
+/* ----------------- Event / Join (light cards) ----------------- */
+.event-grid, .join-grid, .contact{
+  background:#ffffff; border:1px solid var(--stroke); border-radius:20px; padding: clamp(18px,3vw,28px);
+  box-shadow: var(--soft-shadow);
+}
+.event-grid{ display:grid; gap:22px; align-items:center; }
+.join-grid{ display:grid; gap:22px; align-items:center; }
+.event-img, .join-img{ width:100%; border-radius:18px; object-fit:cover; border:1px solid var(--stroke); box-shadow: var(--soft-shadow); }
+#event .tag{ display:inline-block; margin-bottom:10px; color:#0f766e; background:#eafff5; border:1px solid #c8ffe6; padding:6px 10px; border-radius:999px; font-weight:800; }
+
+@media (min-width:900px){
+  .event-grid{ grid-template-columns: 1.08fr .92fr; }
+  .join-grid{ grid-template-columns: 1.05fr .95fr; }
+}
+
+/* ----------------- Team (light cards) ----------------- */
+.team-grid .person{
+  position:relative; background:#ffffff; border:1px solid var(--stroke); border-radius:18px; padding:16px;
+  text-align:center; box-shadow: var(--soft-shadow); overflow:hidden;
+}
+.team-grid .person::before{
+  content:""; position:absolute; left:0; right:0; top:0; height:6px;
+  background: linear-gradient(90deg, #0284c7, #f59e0b 60%, #10b981);
+  opacity:.5;
+}
+.team-grid .person img{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:14px; margin-bottom:12px; border:1px solid var(--stroke); }
+.role{ color:#0369a1; font-weight:800; margin:2px 0 6px; }
+.bio{ color:var(--muted); font-size:15px; }
+
+/* ----------------- Contact ----------------- */
+.contact h2{ font-size:2rem; font-weight:900; color:#0f172a; margin-bottom:12px; }
+.contact .email a{ color:#0369a1; font-weight:800; text-decoration:none; }
+.contact .email a:hover{ color:#b45309; }
+
+/* ----------------- Footer (light) ----------------- */
+.site-footer{ padding:24px 0; border-top:1px solid #eaeef6; background:#ffffff; }
+.footer-grid{ display:flex; gap:18px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+.footer-brand{ display:flex; align-items:center; gap:12px; color:#475569; }
+.footer-nav a{ color:#475569; text-decoration:none; margin-left:12px; font-weight:700; }
+.footer-nav a:hover{ color:#0f172a; }
+
+/* =========================================================
+   PROJECT HUMANITY — POLISH PACK
+   Smooth section bridges • Section hover glow • Contact fix
+   Paste this at the VERY END of styles.css
+   ========================================================= */
+
+/* ---- 1) Seamless sectional bridges (light) ---- */
+:root{
+  --bridge-h: 120px;            /* height of the soft “bridge” between sections */
+  --bridge-line: rgba(0,0,0,.035);
+}
+
+/* Make tints very soft and let the page background show through */
+.band--tint-sky{
+  background:
+    linear-gradient(180deg, rgba(6,182,212,.08), rgba(6,182,212,.03) 28%, transparent 85%) !important;
+}
+.band--tint-sunrise{
+  background:
+    linear-gradient(180deg, rgba(245,158,11,.09), rgba(245,158,11,.035) 28%, transparent 85%) !important;
+}
+.band--tint-meadow{
+  background:
+    linear-gradient(180deg, rgba(16,185,129,.09), rgba(16,185,129,.035) 28%, transparent 85%) !important;
+}
+
+/* Bigger, softer separators that fade cleanly into the next section */
+.band.sep-top::before,
+.band.sep-bottom::after{
+  height: var(--bridge-h) !important;
+  background:
+    linear-gradient(to bottom, var(--bridge-line) 0 1px, transparent 1px),
+    radial-gradient(120% var(--bridge-h) at 50% 0,
+      rgba(2,132,199,.08) 0,
+      transparent 72%) !important;
+}
+
+/* Color-matched variants */
+.band.sep-sky::before, .band.sep-sky::after{
+  background:
+    linear-gradient(to bottom, var(--bridge-line) 0 1px, transparent 1px),
+    radial-gradient(120% var(--bridge-h) at 50% 0,
+      rgba(6,182,212,.12) 0,
+      transparent 72%) !important;
+}
+.band.sep-sunrise::before, .band.sep-sunrise::after{
+  background:
+    linear-gradient(to bottom, var(--bridge-line) 0 1px, transparent 1px),
+    radial-gradient(120% var(--bridge-h) at 50% 0,
+      rgba(245,158,11,.12) 0,
+      transparent 72%) !important;
+}
+.band.sep-meadow::before, .band.sep-meadow::after{
+  background:
+    linear-gradient(to bottom, var(--bridge-line) 0 1px, transparent 1px),
+    radial-gradient(120% var(--bridge-h) at 50% 0,
+      rgba(16,185,129,.12) 0,
+      transparent 72%) !important;
+}
+
+/* Prevent any seam from showing if margins collapse */
+.band{ z-index: 0; position: relative; }
+.band + .band{ margin-top: 0; }
+
+/* ---- 2) Section hover glow + micro-movement ---- */
+/* Gentle “breathing” glow on section hover */
+.band::after{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:0;
+  transition:opacity .25s ease;
+  background:
+    radial-gradient(800px 260px at 50% 20%, rgba(2,132,199,.06), transparent 70%),
+    radial-gradient(900px 300px at 50% 100%, rgba(245,158,11,.05), transparent 70%);
+}
+.band:hover::after{ opacity:.9; }
+
+/* Nudge main blocks when the whole section is hovered */
+.band:hover .card,
+.band:hover .event-grid,
+.band:hover .join-grid,
+.band:hover .contact,
+.band:hover .team-grid .person{
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(2,8,23,.12);
+}
+.card, .event-grid, .join-grid, .contact, .team-grid .person{
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+
+/* Individual hover remains slightly stronger for responsiveness */
+.card:hover,
+.event-grid:hover,
+.join-grid:hover,
+.team-grid .person:hover,
+.contact:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 18px 48px rgba(2,8,23,.16);
+}
+
+/* ---- 3) Contact section fixes (size + image fit) ---- */
+.contact{
+  align-items: start;                /* text aligns to top next to the image */
+  padding: clamp(18px, 2.5vw, 26px); /* slightly tighter */
+  border-radius: 16px;
+}
+.contact h2{ margin-top: 2px; }
+
+/* Keep the photo tidy and proportional */
+.contact img{
+  width: 100%;
+  height: auto;
+  max-height: 380px;                 /* ⬅ reduce overall height */
+  aspect-ratio: 16 / 10;             /* consistent shape */
+  object-fit: cover;                 /* fills box without distortion */
+  border-radius: 14px;
+  border: 1px solid #e6eef7;
+  box-shadow: 0 8px 28px rgba(2,8,23,.08);
+}
+
+/* Layout balance on desktop */
+@media (min-width: 900px){
+  .contact{
+    grid-template-columns: 1.05fr .95fr; /* text : image */
+  }
+}
+
+/* Slight polish for Contact link */
+.contact .email a{
+  text-underline-offset: 3px;
+  transition: color .15s ease, text-shadow .15s ease;
+}
+.contact .email a:hover{
+  color:#b45309; text-shadow: 0 0 8px rgba(245,158,11,.25);
+}
+
+/* ---- 4) Little extras for delight ---- */
+/* Make hero image react a bit more */
+.hero-media img{ transition: transform .25s ease, box-shadow .25s ease; }
+.hero-media img:hover{
+  transform: scale(1.02);
+  box-shadow: 0 16px 48px rgba(2,132,199,.18);
+}
+
+/* Crisp hairline on cards for light mode */
+.card, .event-grid, .join-grid, .contact, .team-grid .person{
+  border-color: #e9eef7;
+}
+
+/* Tiny performance safeguard (prevents hover flicker on Safari) */
+@media (hover:hover){
+  .band, .card, .event-grid, .join-grid, .contact, .team-grid .person{ will-change: transform, box-shadow; }
+}
+
+/* =========================================
+   INTERACTIVE GLOW — LIGHT THEME
+   (paste at the very end of styles.css)
+   ========================================= */
+
+/* ---------- A. Boxes & panels (card, event, join, contact, team) ---------- */
+/* Base: subtle; Hover: lift + soft cyan/amber halo */
+.card,
+.event-grid,
+.join-grid,
+.contact,
+.team-grid .person{
+  position: relative;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+  will-change: transform, box-shadow;
+}
+
+/* Gradient ring (hidden until hover) */
+.card::after,
+.event-grid::after,
+.join-grid::after,
+.contact::after,
+.team-grid .person::after{
+  content: "";
+  position: absolute;
+  inset: -1px;                 /* sits right outside the border */
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s ease;
+  background:
+    radial-gradient(220px 120px at 25% 0%, rgba(2,132,199,.20), transparent 60%),
+    radial-gradient(260px 160px at 85% 100%, rgba(245,158,11,.18), transparent 65%),
+    linear-gradient(180deg, rgba(2,132,199,.22), rgba(245,158,11,.22), rgba(16,185,129,.22));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  padding: 1px;                /* “ring” thickness */
+}
+
+.card:hover,
+.event-grid:hover,
+.join-grid:hover,
+.contact:hover,
+.team-grid .person:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 18px 48px rgba(2,8,23,.16);
+}
+.card:hover::after,
+.event-grid:hover::after,
+.join-grid:hover::after,
+.contact:hover::after,
+.team-grid .person:hover::after{ opacity: .85; }
+
+/* Make card’s existing gradient border pop a bit more on hover */
+.card::before{ transition: opacity .25s ease; }
+.card:hover::before{ opacity: .6; }
+
+/* ---------- B. Images (use shadows/outline; ::after on <img> is unreliable) ---------- */
+.hero-media img,
+.card-img,
+.event-img,
+.join-img,
+.contact img,
+.team-grid .person img{
+  transition: transform .22s ease, box-shadow .22s ease, outline-color .22s ease, filter .22s ease;
+  outline: 0 solid rgba(2,132,199,0);   /* animated outline without layout shift */
+  will-change: transform, box-shadow;
+}
+
+.hero-media img:hover,
+.card-img:hover,
+.event-img:hover,
+.join-img:hover,
+.contact img:hover,
+.team-grid .person img:hover{
+  transform: translateY(-2px) scale(1.01);
+  box-shadow:
+    0 16px 50px rgba(2,132,199,.22),
+    0 4px 14px rgba(2,8,23,.08);
+  outline: 6px solid rgba(2,132,199,.10); /* soft cyan halo */
+}
+
+/* Optional: slightly warmer halo inside sunrise-tinted sections */
+.band--tint-sunrise .card-img:hover,
+.band--tint-sunrise .event-img:hover,
+.band--tint-sunrise .join-img:hover{
+  outline-color: rgba(245,158,11,.12);
+  box-shadow:
+    0 16px 50px rgba(245,158,11,.18),
+    0 4px 14px rgba(2,8,23,.08);
+}
+
+/* ---------- C. Section-level glow when hovering whole band ---------- */
+.band::after{
+  content:"";
+  position:absolute; inset:0; pointer-events:none; opacity:0;
+  transition:opacity .25s ease;
+  background:
+    radial-gradient(900px 320px at 50% 15%, rgba(2,132,199,.06), transparent 70%),
+    radial-gradient(900px 320px at 50% 100%, rgba(245,158,11,.05), transparent 70%);
+}
+.band:hover::after{ opacity:.9; }
+
+/* Color-matched section glows (very subtle) */
+.band--tint-sky:hover::after{
+  background:
+    radial-gradient(900px 320px at 50% 15%, rgba(14,165,233,.08), transparent 70%),
+    radial-gradient(900px 320px at 50% 100%, rgba(14,165,233,.05), transparent 70%);
+}
+.band--tint-meadow:hover::after{
+  background:
+    radial-gradient(900px 320px at 50% 15%, rgba(16,185,129,.08), transparent 70%),
+    radial-gradient(900px 320px at 50% 100%, rgba(16,185,129,.05), transparent 70%);
+}
+.band--tint-sunrise:hover::after{
+  background:
+    radial-gradient(900px 320px at 50% 15%, rgba(245,158,11,.08), transparent 70%),
+    radial-gradient(900px 320px at 50% 100%, rgba(245,158,11,.05), transparent 70%);
+}
+
+/* =========================================================
+   STRONGER GLOW + CONTACT ENHANCEMENTS + SMOOTH SCROLL
+   Paste at the VERY END of styles.css
+   ========================================================= */
+
+/* Smooth scrolling for in-page links (#contact, etc.) */
+html { scroll-behavior: smooth; }
+/* So sticky header won’t hide anchors */
+section { scroll-margin-top: 80px; }
+
+/* ---------- Make panel glow more apparent ---------- */
+.card,
+.event-grid,
+.join-grid,
+.contact,
+.team-grid .person{
+  position: relative;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+}
+
+.card::after,
+.event-grid::after,
+.join-grid::after,
+.contact::after,
+.team-grid .person::after{
+  content:"";
+  position:absolute; inset:-1px;
+  border-radius:inherit; pointer-events:none;
+  opacity:0; transition:opacity .25s ease;
+  /* brighter, color-mixed halo ring */
+  background:
+    radial-gradient(260px 160px at 20% 0%,   rgba(2,132,199,.28), transparent 65%),
+    radial-gradient(280px 180px at 85% 100%, rgba(245,158,11,.24), transparent 70%),
+    linear-gradient(180deg, rgba(2,132,199,.28), rgba(245,158,11,.26), rgba(16,185,129,.26));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  padding:1px;
+}
+
+.card:hover,
+.event-grid:hover,
+.join-grid:hover,
+.contact:hover,
+.team-grid .person:hover{
+  transform: translateY(-8px);
+  box-shadow:
+    0 22px 60px rgba(2,8,23,.18),
+    0 6px 16px rgba(2,8,23,.06);
+}
+.card:hover::after,
+.event-grid:hover::after,
+.join-grid:hover::after,
+.contact:hover::after,
+.team-grid .person:hover::after{ opacity:1; }
+
+/* Make the card’s built-in gradient border pop a touch more */
+.card::before{ transition: opacity .25s ease; }
+.card:hover::before{ opacity:.7; }
+
+/* ---------- Image glow (clearer) ---------- */
+.hero-media img,
+.card-img,
+.event-img,
+.join-img,
+.contact img,
+.team-grid .person img{
+  transition: transform .22s ease, box-shadow .22s ease, outline-color .22s ease, filter .22s ease;
+  outline: 0 solid rgba(2,132,199,0);
+  will-change: transform, box-shadow;
+}
+
+.hero-media img:hover,
+.card-img:hover,
+.event-img:hover,
+.join-img:hover,
+.contact img:hover,
+.team-grid .person img:hover{
+  transform: translateY(-3px) scale(1.015);
+  filter: saturate(1.05) contrast(1.03);
+  /* stronger dual-color halo */
+  box-shadow:
+    0 26px 80px rgba(2,132,199,.30),
+    0 10px 26px rgba(2,8,23,.12);
+  outline: 10px solid rgba(2,132,199,.18);
+}
+
+/* Warmer halo inside sunrise-tinted sections (optional, nice!) */
+.band--tint-sunrise .card-img:hover,
+.band--tint-sunrise .event-img:hover,
+.band--tint-sunrise .join-img:hover{
+  outline-color: rgba(245,158,11,.20);
+  box-shadow:
+    0 26px 80px rgba(245,158,11,.26),
+    0 10px 26px rgba(2,8,23,.12);
+}
+
+/* ---------- Stronger section ambient glow on hover ---------- */
+.band::after{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:0;
+  transition:opacity .25s ease;
+  background:
+    radial-gradient(1100px 360px at 50% 10%,  rgba(2,132,199,.09), transparent 70%),
+    radial-gradient(1100px 360px at 50% 100%, rgba(245,158,11,.08), transparent 72%);
+}
+.band:hover::after{ opacity:1; }
+
+.band--tint-sky:hover::after{
+  background:
+    radial-gradient(1100px 360px at 50% 10%,  rgba(14,165,233,.12), transparent 70%),
+    radial-gradient(1100px 360px at 50% 100%, rgba(14,165,233,.08), transparent 72%);
+}
+.band--tint-meadow:hover::after{
+  background:
+    radial-gradient(1100px 360px at 50% 10%,  rgba(16,185,129,.12), transparent 70%),
+    radial-gradient(1100px 360px at 50% 100%, rgba(16,185,129,.08), transparent 72%);
+}
+.band--tint-sunrise:hover::after{
+  background:
+    radial-gradient(1100px 360px at 50% 10%,  rgba(245,158,11,.12), transparent 70%),
+    radial-gradient(1100px 360px at 50% 100%, rgba(245,158,11,.08), transparent 72%);
+}
+
+/* ---------- Contact block: refined & punchier ---------- */
+.contact{
+  align-items:start;
+  border-radius:18px;
+  padding: clamp(18px, 2.4vw, 26px);
+  border: 1px solid #dbeafe; /* light blue border */
+  background:
+    radial-gradient(700px 240px at 6% 0%,   rgba(6,182,212,.14), transparent 72%),
+    radial-gradient(700px 260px at 96% 110%, rgba(245,158,11,.12), transparent 75%),
+    #fff;
+  box-shadow:
+    0 18px 44px rgba(2,8,23,.10),
+    0 4px 10px rgba(2,8,23,.04);
+}
+
+.contact h2{
+  font-size: 2rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 2px 0 8px;
+}
+
+.contact p{ color:#475569; }
+
+.contact .email a{
+  color:#0369a1; font-weight: 800; text-decoration: none; text-underline-offset: 3px;
+}
+.contact .email a:hover{ color:#b45309; text-decoration: underline; }
+
+/* Fit + round the image nicely, not too tall */
+.contact img{
+  width:100%;
+  height:auto;
+  max-height: 420px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid #e6eef7;
+  border-radius:16px;
+  box-shadow: 0 12px 34px rgba(2,8,23,.10);
+}
+
+@media (min-width:900px){
+  .contact{ grid-template-columns: 1.05fr .95fr; }
+}
+
+/* NAVBAR STYLE — ACCENT COLOR BAR */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(90deg, #0ea5e9, #f59e0b);
+  color: #ffffff;
+  border-bottom: none;
+  box-shadow: 0 3px 14px rgba(2, 8, 23, 0.12);
+}
+.nav a {
+  color: #ffffff;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+.nav a:hover {
+  opacity: 0.85;
+}
+.brand {
+  color: #ffffff;
+}
+
+/* ---------- Footer layout + brand ---------- */
+.site-footer{
+  background: linear-gradient(90deg, #f0fdff 0%, #fff8eb 100%);
+  border-top: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 -2px 10px rgba(2,8,23,0.05);
+  padding: 20px 0;
+}
+
+.footer-grid{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.footer-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#334155;               /* slate-700 */
+  text-decoration:none;
+  font-size:.95rem;
+}
+
+.footer-logo{
+  width:32px;
+  height:32px;
+  flex:0 0 32px;
+  object-fit:contain;
+  border-radius:6px;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.footer-brand:hover .footer-logo{
+  transform:scale(1.08);
+  box-shadow:0 0 12px rgba(2,132,199,.30);
+}
+
+/* Footer nav links */
+.footer-nav{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.footer-nav a{
+  color:#475569;
+  text-decoration:none;
+  font-weight:700;
+}
+.footer-nav a:hover{ color:#0f172a; }
+
+/* Safety: prevent any image in footer from growing huge */
+.site-footer img{ max-width:100%; height:auto; }
+
+/* Stack nicely on narrow screens */
+@media (max-width:640px){
+  .footer-grid{ justify-content:center; text-align:center; }
+  .footer-nav{ justify-content:center; }
+}
+
+/* =========================================================
+   FIX: remove the hairline right below About and re-space the
+   lower bridge so it never collides with the officer cards.
+   ========================================================= */
+
+/* 1) Push About’s bottom bridge a bit farther down */
+#about::after{
+  bottom: -220px !important;   /* was -170px */
+  height: 320px !important;    /* slightly taller fade for smoother blend */
+  background:
+    radial-gradient(160% 320px at 50% 8%,
+      rgba(14,165,233,.11) 0%,
+      rgba(14,165,233,.06) 42%,
+      transparent 86%);
+}
+
+/* 2) The next section after About (e.g., #contact) – kill its top hairline */
+#contact.band.sep-top::before{           /* if your next section has id="contact" */
+  display:none !important;
+  height:0 !important;
+  background:none !important;
+}
+
+/* Safety: if the very next .band (whatever it is) has a top separator,
+   disable that hairline only when it follows #about */
+#about + .band.sep-top::before{
+  display:none !important;
+  height:0 !important;
+  background:none !important;
+}
+
+/* If your next section uses a colored top separator (sep-sky/sunrise/meadow),
+   silence those variants too when they follow #about */
+#about + .band.sep-sky::before,
+#about + .band.sep-sunrise::before,
+#about + .band.sep-meadow::before{
+  display:none !important;
+  height:0 !important;
+  background:none !important;
+}
+
+/* ================================
+   FROSTED SECTION DIVIDER (clean, no hairline)
+   Sits between Get Involved and About Us
+   ================================ */
+
+.section-divider{
+  position: relative;
+  width: 100%;
+  height: 120px;               /* the visible “bar” height */
+  margin: 32px 0 48px;         /* spacing away from sections */
+  pointer-events: none;
+  z-index: 0;
+  border: 0;
+  line-height: 0;
+  font-size: 0;
+  background: none;            /* we’ll paint with ::before only */
+}
+
+/* Long, soft, white→sky→white feather with extended reach above & below */
+.section-divider::before{
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: -60px;                  /* extend upward to cover any seam */
+  height: calc(120px + 120px); /* divider height + 60px top + 60px bottom */
+  background:
+    /* center frost bar */
+    linear-gradient(
+      to bottom,
+      rgba(14,165,233,0.00)   0%,
+      rgba(14,165,233,0.10)  28%,
+      rgba(14,165,233,0.06)  52%,
+      rgba(255,255,255,1.00) 82%,
+      rgba(255,255,255,0.00) 100%
+    );
+  /* mask so the “bar” feathers off above & below without hard edges */
+  -webkit-mask: linear-gradient(to bottom, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
+          mask: linear-gradient(to bottom, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
+  pointer-events: none;
+}
+
+/* Optional subtle mist for depth */
+.section-divider::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: -40px;
+  height: 80px;
+  background:
+    radial-gradient(70% 80px at 50% 0, rgba(0,0,0,.06), transparent 70%);
+  opacity: .06;
+  pointer-events: none;
+}
