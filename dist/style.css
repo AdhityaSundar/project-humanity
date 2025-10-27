@@ -918,3 +918,96 @@ section:first-of-type{
   /* If you still see a hairline on some devices, switch height to 1px and keep alpha low */
   /* height:1px; background:rgba(2,8,23,.06); */
 }
+/* ===== 1) DESKTOP NAV — center container, horizontal menu, no weird bar ===== */
+@media (min-width: 900px){
+
+  /* center the nav content inside the full-width gradient bar */
+  .container.nav{
+    max-width: 1100px;
+    margin-inline: auto;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;              /* match your header height */
+  }
+
+  /* header stays solid gradient on desktop */
+  .site-header{
+    background: linear-gradient(90deg, #0ea5e9, #59c0a1, #a6c05e, #f59e0b);
+    border: 0;                 /* kill any hairline */
+    box-shadow: 0 3px 14px rgba(2,8,23,.12);
+    z-index: 1000;
+  }
+
+  /* horizontal menu on desktop */
+  .menu{
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 18px !important;
+    padding: 0 !important;
+  }
+
+  /* desktop links are white on the gradient */
+  .menu a{
+    color: #fff !important;
+    font-weight: 800;
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+  .menu a:hover{ background: rgba(255,255,255,.14); }
+
+  /* hide hamburger on desktop */
+  .menu-button{ display: none !important; }
+
+  /* extra safety: remove any accidental top line */
+  html, body{ margin:0; padding:0; }
+  .site-header::before,
+  .site-header::after{ content:none !important; }
+}
+
+/* ===== 2) MOBILE NAV — keep your current behavior, but scope it to mobile ===== */
+@media (max-width: 899px){
+
+  :root{ --header-h: 56px; }   /* you already use this token */
+
+  /* panel lives right under the sticky header and uses the gradient */
+  .menu{
+    position: fixed;
+    inset: var(--header-h) 0 auto 0;
+    transform: translateY(-115%);
+    transition: transform .25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px 20px;
+    background: linear-gradient(
+      90deg,
+      rgba(14,165,233,.95),
+      rgba(89,192,161,.95),
+      rgba(166,192,94,.95),
+      rgba(245,158,11,.95)
+    );
+    backdrop-filter: blur(8px);
+    border: 0;
+    box-shadow: 0 8px 26px rgba(2,8,23,.12);
+    z-index: 1001;
+  }
+
+  #menu-toggle{ display:none; }
+  #menu-toggle:checked ~ .menu{ transform: translateY(0); }
+
+  /* white text on mobile menu */
+  .menu a{ color:#fff !important; font-weight:800; }
+  .menu a:hover{ background: rgba(255,255,255,.14); }
+
+  /* visible hamburger bars on gradient */
+  .menu-button span{ background:#fff; }
+}
